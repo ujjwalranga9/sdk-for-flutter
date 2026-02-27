@@ -54,9 +54,17 @@ class RealtimeMessage {
   /// Initializes a [RealtimeMessage] from a [Map<String, dynamic>].
   factory RealtimeMessage.fromMap(Map<String, dynamic> map) {
     return RealtimeMessage(
-      events: List<String>.from(map['events'] ?? []),
+      events: (map['events'] is Iterable)
+          ? List<String>.from(map['events'])
+          : (map['events'] is Map)
+              ? List<String>.from((map['events'] as Map).values)
+              : [],
       payload: Map<String, dynamic>.from(map['payload'] ?? <String, dynamic>{}),
-      channels: List<String>.from(map['channels'] ?? []),
+      channels: (map['channels'] is Iterable)
+          ? List<String>.from(map['channels'])
+          : (map['channels'] is Map)
+              ? List<String>.from((map['channels'] as Map).values)
+              : [],
       timestamp: map['timestamp'],
     );
   }
